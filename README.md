@@ -1,6 +1,6 @@
 # dockerfile-include
 
-* npm install dockerfile-include
+* npm install -g dockerfile-include
 
 
 Create a docker file with include instruction
