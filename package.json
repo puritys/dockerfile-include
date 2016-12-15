@@ -10,7 +10,7 @@
   ],
   "bin": {
     "dockerfile-include": "bin/dockerfile-include.js"
-  }
+  },
   "scripts": {
     "test": "cd tests/unit ; mocha *.js"
   },
