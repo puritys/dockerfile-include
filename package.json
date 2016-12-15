@@ -11,6 +11,11 @@
     "include"
   ],
   "author": "puritys.chen@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:puritys/dockerfile-include.git"
+  },
+  "homepage": "https://github.com/puritys/dockerfile-include",
   "license": "MIT",
   "dependencies": {
     "commander": "^2.9.0"
