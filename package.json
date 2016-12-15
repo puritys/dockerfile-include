@@ -1,8 +1,16 @@
 {
   "name": "dockerfile-include",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "To add new instruction \"include\" for Dockerfile.",
   "main": "index.js",
+  "files": [
+    "bin",
+    "index.js",
+    "package.json"
+  ],
+  "bin": {
+    "dockerfile-include": "bin/dockerfile-include.js"
+  }
   "scripts": {
     "test": "cd tests/unit ; mocha *.js"
   },

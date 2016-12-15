@@ -14,7 +14,7 @@ INCLUDE centos.doc
 
 Execute docker build command
 ```
-node ../../index.js -i centos.doc -o Dockerfile
+dockerfile-include -i centos.doc -o Dockerfile
 docker build .
 ```
 
