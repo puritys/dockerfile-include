@@ -1,0 +1,2 @@
+RUN yum install -y sudo wget telnet openssh-server vim git ncurses-term
+include common.doc
