@@ -1,4 +1,6 @@
 FROM centos7
 LABEL example
+#comment
 INCLUDE centos.doc
-COPY conf/php.ini /etc/ 
+COPY conf/php.ini /etc/
+#comment

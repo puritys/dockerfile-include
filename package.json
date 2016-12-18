@@ -1,6 +1,6 @@
 {
   "name": "dockerfile-include",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "To add new instruction \"include\" for Dockerfile.",
   "main": "index.js",
   "files": [
@@ -27,6 +27,6 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^2.9.0",
-    "copy": "^0.3.0"
+    "fs-extra": "^1.0.0"
   }
 }

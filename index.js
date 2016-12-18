@@ -1,6 +1,7 @@
 var fs = require('fs');
 var param = require('commander');
-var copy = require('copy');
+var fsExtra = require('fs-extra')
+
 param.version('0.0.1')
     .option('-d, --debug [string]', 'enable debug or not', true)
     .option('-i, --input [stting]', 'Dockerfile', '')
@@ -32,14 +33,19 @@ if (!param.output) {
 
 function handle(pwd, c) {
     var reg;
-    reg = /COPY[\s]+([^\s]+)/gi;
+    // Remove comments
+    reg = /(^|[\n\r]+)#([^\n\r]+)/g;
+    c = c.replace(reg, '');
+
+    reg = /(^|[\n\r]+)COPY[\s]+([^\s]+)/gi;
     c = c.replace(reg, handleCopy.bind(null,pwd));
-    reg = /INCLUDE[\s]+([^\n\r]+)/gi;
+    reg = /(^|[\n\r]+)INCLUDE[\s]+([^\n\r]+)/gi;
     c = c.replace(reg, handleInclude.bind(null, pwd));
+
     return c;
 }
 
-function handleInclude(pwd, matStr, file) {
+function handleInclude(pwd, matStr, br, file) {
     var pwd2;
     if (!fs.existsSync(pwd+"/"+file)) {
         console.error("File ", pwd+"/"+file, " is not exist.");
@@ -48,18 +54,18 @@ function handleInclude(pwd, matStr, file) {
     var c = fs.readFileSync(pwd+"/"+file, 'UTF-8');
     pwd2 = require('path').dirname(pwd+"/"+file); 
     c = handle(pwd2, c);
-    return c;
+    return br+c;
 }
 
 
-function handleCopy(pwd, matStr, file) {
-    var orgPath, retPath;
+function handleCopy(pwd, matStr, br, file) {
+    var orgPath, retPath, filename;
     filePath = pwd + "/" + file;
     retPath = inputDirPath+'/include_tmp/';
-    copy(filePath, retPath, function(err) {
-        if (err) console.log(err);
-    });
-    return "COPY include_tmp/" + filePath;
+    fsExtra.mkdirsSync('include_tmp');
+    filename = file.replace(/[\.\/\\]/, '_');
+    fsExtra.copySync(filePath, retPath + filename);
+    return br + "COPY include_tmp/" + filename;
 }
 
 

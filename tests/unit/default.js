@@ -1,6 +1,15 @@
 var assert = require('assert');
 var child = require('child_process');
 var fs = require('fs');
+var expect; 
+    expect = ["FROM centos7",
+              "LABEL example",
+              "RUN yum install -y sudo wget telnet openssh-server vim git ncurses-term",
+              'RUN echo "common"', '',
+              'COPY include_tmp/files_aa.sh /var/tmp/',
+              '','','COPY include_tmp/conf_php.ini /etc/',
+              "",
+             ].join("\n");
 
 describe("Test include of Dockerfile", function() {//{{{
     var content;
@@ -11,15 +20,7 @@ describe("Test include of Dockerfile", function() {//{{{
         });
     }); 
     it("normal case", function() {
-        var expect;
-        expect = ["FROM centos7",
-                  "LABEL example",
-                  "RUN yum install -y sudo wget telnet openssh-server vim git ncurses-term",
-                  'RUN echo "common"', '',
-                  'COPY data/include_tmp/data/inc/files/aa.sh /var/tmp/',
-                  "","","",""
-                 ].join("\n");
-        assert.equal(expect, content);
+        assert.equal(expect + "\n", content);
     }); 
 });//}}}
 
@@ -33,14 +34,6 @@ describe("Test output", function() {//{{{
         });
     }); 
     it("normal case", function() {
-        var expect;
-        expect = ['FROM centos7',
-                  'LABEL example',
-                  'RUN yum install -y sudo wget telnet openssh-server vim git ncurses-term',
-                  'RUN echo "common"',
-                  'COPY files/aa.sh /var/tmp/',
-                  '\n\n'
-                 ].join("\n");
         assert.equal(expect, content);
     }); 
 });//}}}
