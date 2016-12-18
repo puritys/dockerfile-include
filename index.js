@@ -59,13 +59,16 @@ function handleInclude(pwd, matStr, br, file) {
 
 
 function handleCopy(pwd, matStr, br, file) {
-    var orgPath, retPath, filename;
+    var orgPath, retPath, dir, filename;
     filePath = pwd + "/" + file;
     retPath = inputDirPath+'/include_tmp/';
-    fsExtra.mkdirsSync('include_tmp');
-    filename = file.replace(/[\.\/\\]/, '_');
-    fsExtra.copySync(filePath, retPath + filename);
-    return br + "COPY include_tmp/" + filename;
+    dir = require('path').dirname(file);
+    filename = require('path').basename(file);
+    if (!dir) dir = "tmp";
+    dir = dir.replace(/[\.\/\\]/, '_');
+    fsExtra.mkdirsSync('include_tmp/' + dir);
+    fsExtra.copySync(filePath, retPath + dir + "/" + filename);
+    return br + "COPY include_tmp/" + dir + "/" + filename;
 }
 
 

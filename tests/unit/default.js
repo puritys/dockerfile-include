@@ -6,8 +6,8 @@ var expect;
               "LABEL example",
               "RUN yum install -y sudo wget telnet openssh-server vim git ncurses-term",
               'RUN echo "common"', '',
-              'COPY include_tmp/files_aa.sh /var/tmp/',
-              '','','COPY include_tmp/conf_php.ini /etc/',
+              'COPY include_tmp/files/aa.sh /var/tmp/',
+              '','','COPY include_tmp/conf/php.ini /etc/',
               "",
              ].join("\n");
 

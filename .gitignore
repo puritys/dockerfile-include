@@ -8,3 +8,5 @@ node_modules*
 build/*
 coverage/
 binary/
+*include_tmp*
+npm-debug*
