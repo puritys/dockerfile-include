@@ -18,3 +18,10 @@ dockerfile-include -i centos.doc -o Dockerfile
 docker build .
 ```
 
+
+
+## Functionalities
+
+* Add a new instruction "include" to include other Dockerfile.
+* chang the file path of instruction COPY.
+

@@ -1,3 +1,4 @@
 FROM centos7
 LABEL example
 INCLUDE centos.doc
+COPY conf/php.ini /etc/ 
