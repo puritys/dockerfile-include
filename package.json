@@ -1,6 +1,6 @@
 {
   "name": "dockerfile-include",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "To add new instruction \"include\" for Dockerfile.",
   "main": "index.js",
   "files": [

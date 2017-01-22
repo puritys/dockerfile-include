@@ -46,13 +46,18 @@ function handle(pwd, c) {
 }
 
 function handleInclude(pwd, matStr, br, file) {
-    var pwd2;
-    if (!fs.existsSync(pwd+"/"+file)) {
-        console.error("File ", pwd+"/"+file, " is not exist.");
+    var pwd2, filePath;
+    if (file.indexOf('/') == 0) {
+        filePath = file;
+    } else {
+        filePath = pwd + "/" + file;
+    } 
+    if (!fs.existsSync(filePath)) {
+        console.error("File ", filePath, " is not exist.");
         process.exit(1);
     }
-    var c = fs.readFileSync(pwd+"/"+file, 'UTF-8');
-    pwd2 = require('path').dirname(pwd+"/"+file); 
+    var c = fs.readFileSync(filePath, 'UTF-8');
+    pwd2 = require('path').dirname(filePath); 
     c = handle(pwd2, c);
     return br+c;
 }
@@ -60,7 +65,11 @@ function handleInclude(pwd, matStr, br, file) {
 
 function handleCopy(pwd, matStr, br, file) {
     var orgPath, retPath, dir, filename;
-    filePath = pwd + "/" + file;
+    if (file.indexOf('/') == 0) {
+        filePath = file;
+    } else {
+        filePath = pwd + "/" + file;
+    }
     retPath = inputDirPath+'/include_tmp/';
     dir = require('path').dirname(file);
     filename = require('path').basename(file);
