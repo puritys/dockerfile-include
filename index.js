@@ -74,7 +74,7 @@ function handleCopy(pwd, matStr, br, file) {
     dir = require('path').dirname(file);
     filename = require('path').basename(file);
     if (!dir) dir = "tmp";
-    dir = dir.replace(/[\.\/\\]/, '_');
+    dir = dir.replace(/[\.\/\\]/g, '_');
     fsExtra.mkdirsSync('include_tmp/' + dir);
     fsExtra.copySync(filePath, retPath + dir + "/" + filename);
     return br + "COPY include_tmp/" + dir + "/" + filename;
