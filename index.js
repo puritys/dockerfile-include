@@ -1,6 +1,7 @@
 var fs = require('fs');
 var param = require('commander');
 var fsExtra = require('fs-extra')
+var checksum = require('checksum');
 
 param.version('0.0.1')
     .option('-d, --debug [string]', 'enable debug or not', true)
@@ -76,7 +77,12 @@ function handleCopy(pwd, matStr, br, file) {
     if (!dir) dir = "tmp";
     dir = dir.replace(/[\.\/\\]/g, '_');
     fsExtra.mkdirsSync('include_tmp/' + dir);
-    fsExtra.copySync(filePath, retPath + dir + "/" + filename);
+    var retFile = retPath + dir + "/" + filename;
+    if (fs.existsSync(retFile) && checksum(fs.readFileSync(retFile)) == checksum(fs.readFileSync(filePath))) {
+        // file content is the same, skip.
+    } else {
+        fsExtra.copySync(filePath, retPath + dir + "/" + filename);
+    }
     return br + "COPY include_tmp/" + dir + "/" + filename;
 }
 

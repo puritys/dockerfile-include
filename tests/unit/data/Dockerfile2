@@ -1,0 +1,3 @@
+FROM centos7
+LABEL example2
+COPY conf/bb.txt /etc/

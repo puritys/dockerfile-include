@@ -38,4 +38,30 @@ describe("Test output", function() {//{{{
     }); 
 });//}}}
 
+describe("Test not copy the same file", function() {//{{{
+    var content, time1, time2;
+    before(function (done) {
+        if (fs.existsSync("data/include_tmp/conf/bb.txt")) {
+            fs.unlink("data/include_tmp/conf/bb.txt");
+        }
+        child.exec("node ../../index.js -i data/Dockerfile2 -o tmp2", function (err, res) {
+            content = fs.readFileSync('tmp2', 'UTF-8');
+            fs.unlink('tmp2');
+            fs.stat('data/include_tmp/conf/bb.txt', function (err, s) {
+                time1 = s.mtime;
+            });
+            child.exec("node ../../index.js -i data/Dockerfile2 -o tmp2", function (err, res) {
+                content = fs.readFileSync('tmp2', 'UTF-8');
+                fs.unlink('tmp2');
+                fs.stat('data/include_tmp/conf/bb.txt', function (err, s) {
+                    time2 = s.mtime;
+                    done();
+                });
+            });
+        });
+    }); 
+    it("normal case", function() {
+        assert.equal(time1.toString(), time2.toString());
+    }); 
+});//}}}
 
