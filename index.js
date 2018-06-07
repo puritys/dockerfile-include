@@ -54,7 +54,7 @@ function handleInclude(pwd, matStr, br, file) {
         filePath = pwd + "/" + file;
     } 
     if (!fs.existsSync(filePath)) {
-        console.error("File ", filePath, " is not exist.");
+        console.error("File '", filePath, "' is not exist.");
         process.exit(1);
     }
     var c = fs.readFileSync(filePath, 'UTF-8');
@@ -78,10 +78,13 @@ function handleCopy(pwd, matStr, br, file) {
     dir = dir.replace(/[\.\/\\]/g, '_');
     fsExtra.mkdirsSync('include_tmp/' + dir);
     var retFile = retPath + dir + "/" + filename;
+    if (!fs.existsSync(filePath)) {
+        throw new Exception("file not found: '" + filePath + "'");
+    }
     if (fs.existsSync(retFile) && checksum(fs.readFileSync(retFile)) == checksum(fs.readFileSync(filePath))) {
         // file content is the same, skip.
     } else {
-        fsExtra.copySync(filePath, retPath + dir + "/" + filename);
+        fsExtra.copySync(filePath, retFile);
     }
     return br + "COPY include_tmp/" + dir + "/" + filename;
 }
